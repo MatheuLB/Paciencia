@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Paciência</title>
+<meta name="description" content="Jogo de paciência simples, com nível fácil (vira 1 carta) e difícil (vira 3 cartas).">
+<meta name="theme-color" content="#1d6b40">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Paciência">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icones/icone-192.png">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<header class="barra">
+  <button type="button" id="botao-novo">Novo jogo</button>
+  <button type="button" id="botao-desfazer">Desfazer</button>
+  <button type="button" id="botao-dica">Dica</button>
+</header>
+<p class="nivel" id="nivel"></p>
+
+<main id="mesa" aria-label="Mesa do jogo"></main>
+
+<div class="aviso" id="aviso" hidden></div>
+
+<div class="janela" id="janela-nivel" hidden>
+  <div class="caixa">
+    <h2>Novo jogo</h2>
+    <button type="button" class="grande" data-nivel="1">Fácil<small>vira 1 carta por vez</small></button>
+    <button type="button" class="grande" data-nivel="3">Difícil<small>vira 3 cartas por vez</small></button>
+    <button type="button" class="simples" id="botao-voltar">Voltar ao jogo</button>
+  </div>
+</div>
+
+<div class="janela" id="janela-vitoria" hidden>
+  <div class="caixa">
+    <h2>Parabéns!</h2>
+    <p>Você ganhou!</p>
+    <p class="placar" id="placar"></p>
+    <button type="button" class="grande" id="botao-de-novo">Jogar de novo</button>
+  </div>
+</div>
+
+<script src="jogo.js"></script>
+</body>
+</html>

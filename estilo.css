@@ -1,0 +1,238 @@
+:root {
+  --feltro: #1d6b40;
+  --vermelho: #c8102e;
+  --preto: #161616;
+  --verso: #2a4f9e;
+  --verso-claro: #3a64bd;
+  --cw: 50px;
+  --ch: 70px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--feltro);
+  font-family: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ===== Barra de botões ===== */
+.barra {
+  display: flex;
+  gap: 8px;
+  padding: 8px 8px 0;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.barra button {
+  flex: 1;
+  min-height: 48px;
+  padding: 8px 4px;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #12331f;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  touch-action: manipulation;
+}
+
+.barra button:active { background: #d9e8de; }
+.barra button:disabled { opacity: 0.45; }
+
+.nivel {
+  margin: 6px 0 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ===== Mesa e cartas ===== */
+#mesa {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.carta {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--cw);
+  height: var(--ch);
+  border-radius: calc(var(--cw) * 0.1);
+  border: 1px solid #b9b9b9;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+.carta.vermelha { color: var(--vermelho); }
+.carta.preta { color: var(--preto); }
+
+.canto {
+  position: absolute;
+  left: 6%;
+  top: 1%;
+  display: flex;
+  align-items: baseline;
+  font-size: calc(var(--cw) * 0.42);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.06em;
+}
+
+.canto i {
+  font-style: normal;
+  font-size: 0.82em;
+  margin-left: 0.08em;
+}
+
+.centro {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6%;
+  text-align: center;
+  font-size: calc(var(--cw) * 0.66);
+  line-height: 1;
+}
+
+.carta.virada {
+  border: 2px solid #fff;
+  background: repeating-linear-gradient(45deg, var(--verso) 0 4px, var(--verso-claro) 4px 8px);
+}
+
+.carta.virada > * { display: none; }
+.carta.arrastando { transition: none; box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45); }
+
+.carta.dica { box-shadow: 0 0 0 3px #ffd400, 0 0 14px #ffd400; }
+
+.carta.nao { animation: balancar 0.3s; }
+
+@keyframes balancar {
+  0%, 100% { translate: 0; }
+  25% { translate: -5px; }
+  75% { translate: 5px; }
+}
+
+.vaga {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--cw);
+  height: var(--ch);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: calc(var(--cw) * 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: calc(var(--cw) * 0.55);
+}
+
+.vaga.dica { border-color: #ffd400; box-shadow: 0 0 14px #ffd400; }
+
+/* ===== Avisos e janelas ===== */
+.aviso {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 32px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  z-index: 2000;
+}
+
+.janela {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.janela[hidden], .aviso[hidden] { display: none; }
+
+.caixa {
+  width: 100%;
+  max-width: 360px;
+  padding: 22px 18px;
+  border-radius: 18px;
+  background: #fff;
+  text-align: center;
+  color: #12331f;
+}
+
+.caixa h2 { margin: 0 0 14px; font-size: 26px; }
+.caixa p { margin: 0 0 12px; font-size: 19px; }
+.caixa .placar { font-size: 16px; color: #4a5a50; }
+
+.caixa button {
+  display: block;
+  width: 100%;
+  border: 0;
+  font: inherit;
+  touch-action: manipulation;
+}
+
+.caixa .grande {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--feltro);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.caixa .grande:active { background: #154f2f; }
+
+.caixa .grande small {
+  display: block;
+  margin-top: 2px;
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.caixa .simples {
+  margin-top: 14px;
+  padding: 10px;
+  background: none;
+  color: #1d6b40;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.caixa .simples[hidden] { display: none; }
